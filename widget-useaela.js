@@ -182,17 +182,17 @@
         .q-btn-trigger-ia img { width: 100%; height: 100%; object-fit: contain; }
         @media (min-width: 768px) { .q-btn-trigger-ia { width: 70px; height: 70px; } }
 
-        /* ── Inline button ── */
+        /* ── Inline button — mesmo estilo do botão Comprar (Aela: #b47b47) ── */
         .q-btn-inline-provador {
             display: flex; align-items: center; justify-content: center; gap: 7px;
             width: 100%; padding: 13px 16px;
-            background: transparent; color: var(--c-ink);
-            border: 1.5px solid var(--c-ink); border-radius: 8px;
-            font-family: 'Work Sans', var(--font-body), sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase;
-            cursor: pointer; transition: background 0.25s, color 0.25s;
-            margin-bottom: 10px; box-sizing: border-box;
+            background: #b47b47; color: #fff;
+            border: none; border-radius: 0;
+            font-family: 'Work Sans', var(--font-body), sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; text-align: center;
+            cursor: pointer; transition: filter 0.25s;
+            margin: 0 auto 10px; box-sizing: border-box;
         }
-        .q-btn-inline-provador:hover { background: var(--c-ink); color: #fff; }
+        .q-btn-inline-provador:hover { filter: brightness(0.92); }
         .q-btn-inline-provador svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ── Modal overlay ── */
@@ -697,7 +697,7 @@
                     <!-- Persistent header (all steps) -->
                     <div id="q-header-provador">
                         <h1>Provador Virtual</h1>
-                        <img src="https://acdn-us.mitiendanube.com/stores/001/424/904/themes/common/logo-345834140452547259-1779219774-2a95460c2413a2ff39c4b7f4d32b22531779219775-480-0.webp" alt="AELA" style="height:48px;width:auto;filter:brightness(0);"/>
+                        <img src="https://acdn-us.mitiendanube.com/stores/001/424/904/themes/common/logo-345834140452547259-1779219774-2a95460c2413a2ff39c4b7f4d32b22531779219775-480-0.webp" alt="AELA" style="height:48px;width:auto;"/>
                     </div>
 
                     <!-- Main step -->
@@ -1281,15 +1281,9 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ phone })
                 });
-                const d = await r.json();
-                const used = Math.max(d.phone_count || 0, d.ip_count || 0, d.count || 0);
-                const restantes = Math.max(0, 3 - used);
-                if (restantes > 0) {
-                    const _txt = restantes + (restantes === 1 ? ' prova restante hoje' : ' provas restantes hoje');
-                    _els.forEach(el => { el.textContent = _txt; el.classList.remove('is-warn'); });
-                } else {
-                    _els.forEach(el => { el.textContent = 'Limite de 3 provas atingido — pague R$1 via PIX para mais uma.'; el.classList.add('is-warn'); });
-                }
+                await r.json();
+                // Provas restantes ocultas pra Aela (sem limite)
+                _els.forEach(el => { el.textContent = ''; el.classList.remove('is-warn'); });
             } catch(_) { _els.forEach(el => { el.textContent = ''; el.classList.remove('is-warn'); }); }
         }
         phoneInput.addEventListener('input', () => {
@@ -1612,11 +1606,9 @@
                     body: JSON.stringify({ phone })
                 });
                 const data = await resp.json();
-                if (data.limited) {
-                    genBtn.disabled = false;
-                    createPixAndPoll();
-                    return;
-                }
+                // Limite desativado pra Aela — ignora data.limited e nunca cai no PIX
+                // if (data.limited) { genBtn.disabled = false; createPixAndPoll(); return; }
+                void data;
             } catch (_) {
                 // se o check falhar, deixa gerar (evita bloquear por erro de rede)
             }
