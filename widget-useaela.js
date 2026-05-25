@@ -1180,7 +1180,7 @@
             var section = document.getElementById('q-related-products');
             if (!grid || !section) return;
 
-            var items = document.querySelectorAll('.js-swiper-related .js-item-product');
+            var items = document.querySelectorAll('.js-swiper-related .js-item-product, .js-swiper-complementary .js-item-product');
             if (!items.length) items = document.querySelectorAll('.js-item-product');
             var products = [];
 
