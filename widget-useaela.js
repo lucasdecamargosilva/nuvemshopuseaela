@@ -939,6 +939,9 @@
             }
             if (!buyBtn) return;
 
+            // Posição preferencial: logo APÓS o seletor de cores/variantes
+            const variantsBlock = document.querySelector('.js-product-variants, .js-color-variants-container, .js-product-variants-group');
+
             const inlineBtn = document.createElement('button');
             inlineBtn.className = 'q-btn-inline-provador';
             inlineBtn.type = 'button';
@@ -968,8 +971,12 @@
                 populateImageSelector();
                 openModal();
             });
-            // Insere DIRETO antes do botão Comprar (mesmo parent imediato)
-            buyBtn.parentNode.insertBefore(inlineBtn, buyBtn);
+            // Insere logo abaixo das cores/variantes, ou (fallback) antes do botão Comprar
+            if (variantsBlock) {
+                variantsBlock.parentNode.insertBefore(inlineBtn, variantsBlock.nextSibling);
+            } else {
+                buyBtn.parentNode.insertBefore(inlineBtn, buyBtn);
+            }
         }
         _injectInlineAela();
         // Re-tenta caso o tema renderize tarde
