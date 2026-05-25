@@ -184,17 +184,18 @@
 
         /* ── Inline button — outline na cor da loja, largura total ── */
         .q-btn-inline-provador {
-            display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
-            width: 100% !important; padding: 16px 20px !important;
+            display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
+            width: 100% !important; max-width: 100% !important; min-width: 0 !important;
+            padding: 18px 32px !important;
             background: transparent !important; color: #b47b47 !important;
             border: 1.5px solid #b47b47 !important; border-radius: 0 !important;
-            font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 13px !important; font-weight: 700 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-align: center !important;
+            font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 14px !important; font-weight: 700 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-align: center !important;
             cursor: pointer !important; transition: background 0.25s, color 0.25s !important;
             margin: 0 0 12px 0 !important; box-sizing: border-box !important;
             line-height: 1 !important;
         }
         .q-btn-inline-provador:hover { background: #b47b47 !important; color: #fff !important; }
-        .q-btn-inline-provador svg { width: 16px !important; height: 16px !important; flex-shrink: 0; }
+        .q-btn-inline-provador svg { width: 18px !important; height: 18px !important; flex-shrink: 0; }
         .q-btn-inline-provador svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ── Modal overlay ── */
@@ -941,13 +942,25 @@
             const inlineBtn = document.createElement('button');
             inlineBtn.className = 'q-btn-inline-provador';
             inlineBtn.type = 'button';
-            const ico = document.createElement('span');
-            ico.textContent = '👤';
-            ico.style.cssText = 'font-size:14px;';
-            const lbl = document.createElement('span');
-            lbl.textContent = 'Provador Virtual';
-            inlineBtn.appendChild(ico);
-            inlineBtn.appendChild(lbl);
+            // Ícone original (silhueta de pessoa)
+            const ns = 'http://www.w3.org/2000/svg';
+            const svg = document.createElementNS(ns, 'svg');
+            svg.setAttribute('viewBox', '0 0 24 24');
+            svg.setAttribute('fill', 'none');
+            svg.setAttribute('stroke', 'currentColor');
+            svg.setAttribute('stroke-width', '1.5');
+            svg.setAttribute('stroke-linecap', 'round');
+            svg.setAttribute('stroke-linejoin', 'round');
+            const path = document.createElementNS(ns, 'path');
+            path.setAttribute('d', 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2');
+            const circle = document.createElementNS(ns, 'circle');
+            circle.setAttribute('cx', '12');
+            circle.setAttribute('cy', '7');
+            circle.setAttribute('r', '4');
+            svg.appendChild(path);
+            svg.appendChild(circle);
+            inlineBtn.appendChild(svg);
+            inlineBtn.appendChild(document.createTextNode('Provador Virtual'));
             inlineBtn.addEventListener('click', (e) => {
                 e.preventDefault(); e.stopPropagation();
                 const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
