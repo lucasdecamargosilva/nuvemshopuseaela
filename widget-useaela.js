@@ -184,15 +184,17 @@
 
         /* ── Inline button — outline na cor da loja, largura total ── */
         .q-btn-inline-provador {
-            display: flex; align-items: center; justify-content: center; gap: 7px;
-            width: 100%; padding: 13px 16px;
-            background: transparent; color: #b47b47;
-            border: 1.5px solid #b47b47; border-radius: 0;
-            font-family: 'Work Sans', var(--font-body), sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; text-align: center;
-            cursor: pointer; transition: background 0.25s, color 0.25s;
-            margin: 0 auto 10px; box-sizing: border-box;
+            display: flex !important; align-items: center !important; justify-content: center !important; gap: 8px !important;
+            width: 100% !important; padding: 16px 20px !important;
+            background: transparent !important; color: #b47b47 !important;
+            border: 1.5px solid #b47b47 !important; border-radius: 0 !important;
+            font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 13px !important; font-weight: 700 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-align: center !important;
+            cursor: pointer !important; transition: background 0.25s, color 0.25s !important;
+            margin: 0 0 12px 0 !important; box-sizing: border-box !important;
+            line-height: 1 !important;
         }
-        .q-btn-inline-provador:hover { background: #b47b47; color: #fff; }
+        .q-btn-inline-provador:hover { background: #b47b47 !important; color: #fff !important; }
+        .q-btn-inline-provador svg { width: 16px !important; height: 16px !important; flex-shrink: 0; }
         .q-btn-inline-provador svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ── Modal overlay ── */
@@ -944,9 +946,13 @@
         });
 
         // Posiciona acima do botão de compra
+        // Procura o BOTÃO real (não o wrapper) e sobe na árvore até achar um container que tenha display block/flex
         const buyBtn = document.querySelector('.js-addtocart, .btn-add-to-cart, [data-component="product.add-to-cart"]');
         if (buyBtn) {
-            buyBtn.parentNode.insertBefore(inlineBtn, buyBtn);
+            // Se o buyBtn estiver dentro de um wrapper único (ex: form ou div.actions),
+            // insere antes do wrapper pra herdar o mesmo container de largura
+            const buyWrapper = buyBtn.closest('.actions, .add-to-cart-wrapper, .product-actions, form, .js-product-form') || buyBtn.parentNode;
+            buyWrapper.parentNode.insertBefore(inlineBtn, buyWrapper);
         } else {
             const variantsContainer = document.querySelector('.js-product-variants');
             if (variantsContainer) {
