@@ -189,7 +189,7 @@
             padding: 14px 32px !important;
             background: transparent !important; color: #b47b47 !important;
             border: 1.5px solid #b47b47 !important; border-radius: 0 !important;
-            font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 14px !important; font-weight: 700 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-align: center !important;
+            font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 1.5px !important; text-transform: uppercase !important; text-align: center !important;
             cursor: pointer !important; transition: background 0.25s, color 0.25s !important;
             margin: 0 0 12px 0 !important; box-sizing: border-box !important;
             line-height: 1 !important;
