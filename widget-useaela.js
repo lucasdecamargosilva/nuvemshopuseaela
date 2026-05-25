@@ -172,7 +172,7 @@
         .q-btn-trigger-ia {
             position: absolute; top: 32px; right: 14px; z-index: 100;
             background: none; border: none; padding: 0; cursor: pointer;
-            width: 70px; height: 70px;
+            width: 90px; height: 90px;
             display: flex; align-items: center; justify-content: center;
             filter: drop-shadow(0 3px 10px rgba(0,0,0,0.22));
             animation: q-shake 3s infinite;
@@ -911,7 +911,57 @@
 
         const modal = document.getElementById('q-modal-ia');
 
-        // Botão inline acima do Comprar — DESATIVADO na Aela
+        // ── Botão inline DIRETAMENTE acima do "ESCOLHER LENTES E COMPRAR" ──
+        function _injectInlineAela() {
+            if (document.querySelector('.q-btn-inline-provador')) return;
+            // Selector específico: o botão de fato (não wrapper)
+            const candidates = [
+                '.js-addtocart',
+                '.btn-add-to-cart',
+                'button[data-component="product.add-to-cart"]',
+                'a[data-component="product.add-to-cart"]',
+            ];
+            let buyBtn = null;
+            for (const sel of candidates) {
+                const el = document.querySelector(sel);
+                if (el && el.offsetParent !== null) { buyBtn = el; break; }
+            }
+            // Fallback: procura por TEXTO "comprar"
+            if (!buyBtn) {
+                const all = document.querySelectorAll('button, a');
+                for (const el of all) {
+                    const t = (el.textContent || '').toLowerCase();
+                    if ((t.includes('comprar') || t.includes('lentes')) && el.offsetParent !== null) {
+                        buyBtn = el; break;
+                    }
+                }
+            }
+            if (!buyBtn) return;
+
+            const inlineBtn = document.createElement('button');
+            inlineBtn.className = 'q-btn-inline-provador';
+            inlineBtn.type = 'button';
+            const ico = document.createElement('span');
+            ico.textContent = '👤';
+            ico.style.cssText = 'font-size:14px;';
+            const lbl = document.createElement('span');
+            lbl.textContent = 'Provador Virtual';
+            inlineBtn.appendChild(ico);
+            inlineBtn.appendChild(lbl);
+            inlineBtn.addEventListener('click', (e) => {
+                e.preventDefault(); e.stopPropagation();
+                const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
+                applyProduct(detectProduct(prodName));
+                populateImageSelector();
+                openModal();
+            });
+            // Insere DIRETO antes do botão Comprar (mesmo parent imediato)
+            buyBtn.parentNode.insertBefore(inlineBtn, buyBtn);
+        }
+        _injectInlineAela();
+        // Re-tenta caso o tema renderize tarde
+        setTimeout(_injectInlineAela, 800);
+        setTimeout(_injectInlineAela, 2200);
         const genBtn      = document.getElementById('q-btn-generate');
         const nextBtn     = null; // single-step flow — no next button
         const phoneStep   = null;
@@ -1143,21 +1193,43 @@
 
             items.forEach(function(item) {
                 if (products.length >= 3) return;
-                var container = item.querySelector('[data-variants]');
-                if (!container) return;
                 try {
-                    var variants = JSON.parse(container.getAttribute('data-variants'));
-                    if (!variants || !variants.length) return;
-                    var v = variants[0];
-                    var imgRaw = v.image_url || '';
-                    var img = imgRaw ? 'https:' + imgRaw.replace(/\\/g, '').replace('-1024-1024.webp', '-480-0.webp') : '';
-                    var price = v.price_short || '';
-                    // Name from img alt (Nuvemshop sets it reliably)
-                    var imgEl = item.querySelector('img[alt]');
-                    var name = imgEl ? imgEl.getAttribute('alt').trim() : '';
-                    // Link from any anchor pointing to /produtos/
+                    // Tentativa 1 — data-variants (Nuvemshop padrão)
+                    var img = '', name = '', price = '', link = '';
+                    var container = item.querySelector('[data-variants]');
+                    if (container) {
+                        var variants = JSON.parse(container.getAttribute('data-variants'));
+                        if (variants && variants.length) {
+                            var v = variants[0];
+                            var imgRaw = v.image_url || '';
+                            img = imgRaw ? 'https:' + imgRaw.replace(/\\/g, '').replace('-1024-1024.webp', '-480-0.webp') : '';
+                            price = v.price_short || '';
+                        }
+                    }
+                    // Tentativa 2 — tema Aela / temas sem data-variants
+                    if (!img) {
+                        var imgEl = item.querySelector('img[data-srcset], img[srcset], img[src]');
+                        if (imgEl) {
+                            var src = imgEl.getAttribute('data-srcset') || imgEl.getAttribute('srcset') || imgEl.getAttribute('src') || '';
+                            // pega a primeira URL do srcset
+                            src = src.split(',')[0].trim().split(' ')[0];
+                            if (src.startsWith('//')) src = 'https:' + src;
+                            img = src;
+                        }
+                    }
+                    if (!price) {
+                        var priceAttr = item.getAttribute('data-product-price');
+                        if (priceAttr) {
+                            var n = Number(priceAttr) / 100;
+                            if (!isNaN(n)) price = n.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+                        }
+                    }
+                    // Nome do alt
+                    var imgEl2 = item.querySelector('img[alt]');
+                    name = imgEl2 ? imgEl2.getAttribute('alt').replace(/ - comprar online$/i, '').trim() : '';
+                    // Link
                     var linkEl = item.querySelector('a[href*="/produtos/"]');
-                    var link = linkEl ? linkEl.getAttribute('href') : '';
+                    link = linkEl ? linkEl.getAttribute('href') : '';
                     if (img && (name || price)) {
                         products.push({ name: name, img: img, price: price, link: link });
                     }
