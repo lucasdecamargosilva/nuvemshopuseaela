@@ -182,17 +182,17 @@
         .q-btn-trigger-ia img { width: 100%; height: 100%; object-fit: contain; }
         @media (min-width: 768px) { .q-btn-trigger-ia { width: 70px; height: 70px; } }
 
-        /* ── Inline button — mesmo estilo do botão Comprar (Aela: #b47b47) ── */
+        /* ── Inline button — outline na cor da loja, largura total ── */
         .q-btn-inline-provador {
             display: flex; align-items: center; justify-content: center; gap: 7px;
             width: 100%; padding: 13px 16px;
-            background: #b47b47; color: #fff;
-            border: none; border-radius: 0;
+            background: transparent; color: #b47b47;
+            border: 1.5px solid #b47b47; border-radius: 0;
             font-family: 'Work Sans', var(--font-body), sans-serif; font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; text-align: center;
-            cursor: pointer; transition: filter 0.25s;
+            cursor: pointer; transition: background 0.25s, color 0.25s;
             margin: 0 auto 10px; box-sizing: border-box;
         }
-        .q-btn-inline-provador:hover { filter: brightness(0.92); }
+        .q-btn-inline-provador:hover { background: #b47b47; color: #fff; }
         .q-btn-inline-provador svg { width: 14px; height: 14px; flex-shrink: 0; }
 
         /* ── Modal overlay ── */
