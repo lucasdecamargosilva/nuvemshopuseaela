@@ -186,7 +186,7 @@
         .q-btn-inline-provador {
             display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
             width: 100% !important; max-width: 100% !important; min-width: 0 !important;
-            padding: 18px 32px !important;
+            padding: 11px 32px !important;
             background: transparent !important; color: #b47b47 !important;
             border: 1.5px solid #b47b47 !important; border-radius: 0 !important;
             font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 14px !important; font-weight: 700 !important; letter-spacing: 2px !important; text-transform: uppercase !important; text-align: center !important;
