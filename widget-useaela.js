@@ -911,54 +911,7 @@
 
         const modal = document.getElementById('q-modal-ia');
 
-        // ── Botão inline acima do botão de compra ──
-        const inlineBtn = document.createElement('button');
-        inlineBtn.className = 'q-btn-inline-provador';
-        inlineBtn.type = 'button';
-
-        const inlineSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        inlineSvg.setAttribute('viewBox', '0 0 24 24');
-        inlineSvg.setAttribute('fill', 'none');
-        inlineSvg.setAttribute('stroke', 'currentColor');
-        inlineSvg.setAttribute('stroke-width', '1.5');
-        inlineSvg.setAttribute('stroke-linecap', 'round');
-        inlineSvg.setAttribute('stroke-linejoin', 'round');
-        const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        path1.setAttribute('d', 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2');
-        const circle1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-        circle1.setAttribute('cx', '12');
-        circle1.setAttribute('cy', '7');
-        circle1.setAttribute('r', '4');
-        inlineSvg.appendChild(path1);
-        inlineSvg.appendChild(circle1);
-        inlineBtn.appendChild(inlineSvg);
-
-        const inlineBtnText = document.createTextNode('Provador Virtual');
-        inlineBtn.appendChild(inlineBtnText);
-
-        inlineBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const prodName = document.querySelector('h1.product__title,.product-single__title,h1')?.innerText || document.title;
-            applyProduct(detectProduct(prodName));
-            populateImageSelector();
-            openModal();
-        });
-
-        // Posiciona acima do botão de compra
-        // Procura o BOTÃO real (não o wrapper) e sobe na árvore até achar um container que tenha display block/flex
-        const buyBtn = document.querySelector('.js-addtocart, .btn-add-to-cart, [data-component="product.add-to-cart"]');
-        if (buyBtn) {
-            // Se o buyBtn estiver dentro de um wrapper único (ex: form ou div.actions),
-            // insere antes do wrapper pra herdar o mesmo container de largura
-            const buyWrapper = buyBtn.closest('.actions, .add-to-cart-wrapper, .product-actions, form, .js-product-form') || buyBtn.parentNode;
-            buyWrapper.parentNode.insertBefore(inlineBtn, buyWrapper);
-        } else {
-            const variantsContainer = document.querySelector('.js-product-variants');
-            if (variantsContainer) {
-                variantsContainer.parentNode.insertBefore(inlineBtn, variantsContainer.nextSibling);
-            }
-        }
+        // Botão inline acima do botão de compra — DESATIVADO na Aela
         const genBtn      = document.getElementById('q-btn-generate');
         const nextBtn     = null; // single-step flow — no next button
         const phoneStep   = null;
