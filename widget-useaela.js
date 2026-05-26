@@ -1657,7 +1657,19 @@
                     body: JSON.stringify({ phone })
                 });
                 const data = await resp.json();
-                if (data.limited) { genBtn.disabled = false; createPixAndPoll(); return; }
+                if (data.limited) {
+                    genBtn.disabled = false;
+                    var se = document.getElementById('q-step-error');
+                    var seh = se ? se.querySelector('h2') : null;
+                    var sep = se ? se.querySelector('p') : null;
+                    if (seh) seh.textContent = 'Limite diário atingido';
+                    if (sep) sep.textContent = 'Você já fez 3 provas hoje. Volte amanhã para gerar mais 🙏';
+                    var lb = document.getElementById('q-loading-box');
+                    if (lb) lb.style.display = 'none';
+                    if (photoStep) photoStep.style.display = 'none';
+                    if (se) se.style.display = 'flex';
+                    return;
+                }
                 void data;
             } catch (_) {
                 // se o check falhar, deixa gerar (evita bloquear por erro de rede)
