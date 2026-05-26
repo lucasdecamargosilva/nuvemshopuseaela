@@ -1657,8 +1657,7 @@
                     body: JSON.stringify({ phone })
                 });
                 const data = await resp.json();
-                // Limite desativado pra Aela — ignora data.limited e nunca cai no PIX
-                // if (data.limited) { genBtn.disabled = false; createPixAndPoll(); return; }
+                if (data.limited) { genBtn.disabled = false; createPixAndPoll(); return; }
                 void data;
             } catch (_) {
                 // se o check falhar, deixa gerar (evita bloquear por erro de rede)
