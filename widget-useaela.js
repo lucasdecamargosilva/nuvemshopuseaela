@@ -157,11 +157,11 @@
 
         :root {
             --c-bg: #ffffff;
-            --c-surface: #f7f6f4;
-            --c-ink: #111111;
+            --c-surface: #faf6ef;
+            --c-ink: #2e2620;
             --c-muted: #999;
-            --c-line: #e8e8e8;
-            --c-accent: #111111;
+            --c-line: #e7dcc8;
+            --c-accent: #a67c3d;
             --c-danger: #cc3333;
             --font-display: 'Bebas Neue', sans-serif;
             --font-body: 'DM Sans', sans-serif;
@@ -187,14 +187,14 @@
             display: flex !important; align-items: center !important; justify-content: center !important; gap: 10px !important;
             width: 100% !important; max-width: 100% !important; min-width: 0 !important;
             padding: 14px 32px !important;
-            background: transparent !important; color: #b47b47 !important;
-            border: 1.5px solid #b47b47 !important; border-radius: 0 !important;
+            background: transparent !important; color: #a67c3d !important;
+            border: 1.5px solid #a67c3d !important; border-radius: 0 !important;
             font-family: 'Work Sans', var(--font-body), sans-serif !important; font-size: 11px !important; font-weight: 700 !important; letter-spacing: 1.5px !important; text-transform: uppercase !important; text-align: center !important;
             cursor: pointer !important; transition: background 0.25s, color 0.25s !important;
             margin: 0 0 12px 0 !important; box-sizing: border-box !important;
             line-height: 1 !important;
         }
-        .q-btn-inline-provador:hover { background: #b47b47 !important; color: #fff !important; }
+        .q-btn-inline-provador:hover { background: #a67c3d !important; color: #fff !important; }
         .q-btn-inline-provador svg { width: 18px !important; height: 18px !important; flex-shrink: 0; }
         .q-btn-inline-provador svg { width: 14px; height: 14px; flex-shrink: 0; }
 
@@ -284,7 +284,7 @@
         .q-provas-msg {
             font-size: 15px; margin-top: 14px; letter-spacing: 0.4px;
             color: #fff; font-weight: 700;
-            background: var(--c-ink);
+            background: var(--c-accent);
             border: 2px solid var(--c-ink);
             border-radius: 8px;
             padding: 14px 18px;
@@ -340,7 +340,7 @@
         .q-photo-thumb-check {
             position: absolute; top: 4px; right: 4px;
             width: 18px; height: 18px; border-radius: 50%;
-            background: var(--c-ink); color: #fff;
+            background: var(--c-accent); color: #fff;
             display: none; align-items: center; justify-content: center;
             font-size: 10px;
         }
@@ -358,7 +358,7 @@
             transition: opacity .15s, background .15s, color .15s;
         }
         .q-photo-arrow.is-active { display: flex; }
-        .q-photo-arrow:hover { background: var(--c-ink); color: #fff; }
+        .q-photo-arrow:hover { background: var(--c-accent); color: #fff; }
         .q-photo-arrow:disabled { opacity: 0; pointer-events: none; }
         .q-photo-arrow svg { width: 14px; height: 14px; }
         .q-photo-arrow-left { left: -6px; }
@@ -451,7 +451,7 @@
         /* Corner marks — clean editorial style */
         .q-face-corner {
             position: absolute; width: 20px; height: 20px;
-            border-color: var(--c-ink); border-style: solid;
+            border-color: var(--c-accent); border-style: solid;
             transition: border-color 0.2s;
         }
         .q-face-corner-tl { top: 0; left: 0; border-width: 2px 0 0 2px; }
@@ -488,7 +488,7 @@
         /* ── CTA buttons ── */
         .q-btn-black {
             width: 100%; height: 52px;
-            background: var(--c-ink); color: #fff;
+            background: var(--c-accent); color: #fff;
             border: none; border-radius: 0;
             font-family: var(--font-display); font-size: 17px;
             letter-spacing: 3px; text-transform: uppercase;
@@ -525,7 +525,7 @@
             outline: none; min-width: 0;
         }
         .q-pix-copiacola button {
-            height: 40px; padding: 0 14px; background: var(--c-ink); color: #fff;
+            height: 40px; padding: 0 14px; background: var(--c-accent); color: #fff;
             border: none; font-size: 10px; font-weight: 600; letter-spacing: 1px;
             text-transform: uppercase; cursor: pointer;
         }
@@ -570,7 +570,7 @@
         .q-loading-bar { height: 1px; background: var(--c-line); width: 100%; position: relative; overflow: hidden; }
         .q-loading-bar > div {
             position: absolute; top: 0; left: 0; height: 100%; width: 35%;
-            background: var(--c-ink); animation: q-slide 1.4s infinite linear;
+            background: var(--c-accent); animation: q-slide 1.4s infinite linear;
         }
 
         /* ── Result ── */
