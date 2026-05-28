@@ -1527,9 +1527,18 @@
                 document.getElementById('q-loading-box').style.display = 'flex';
 
                 try {
+                    // Guard: re-validar telefone antes de submeter (evita whatsapp vazio chegar ao backend)
+                    const _finalNums = (phoneInput.value || '').replace(/\D/g, '');
+                    if (!isValidBRPhone(_finalNums)) {
+                        document.getElementById('q-loading-box').style.display = 'none';
+                        uploadStep.style.display = 'block';
+                        genBtn.disabled = false;
+                        flashError(phoneInput, 'Preencha um WhatsApp válido para continuar');
+                        return;
+                    }
                     const fd = new FormData();
                     fd.append('person_image', userPhoto, 'person.jpg');
-                    fd.append('whatsapp', '55' + phoneInput.value.replace(/\D/g, ''));
+                    fd.append('whatsapp', '55' + _finalNums);
                     fd.append('phone_raw', phoneInput.value);
                     fd.append('product_name', prodName);
                     fd.append('product_type', currentProduct.category);
